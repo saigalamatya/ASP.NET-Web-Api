@@ -10,7 +10,8 @@ namespace WebApiDemo.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IEnumerable<Employee> Get()
+        [HttpGet]
+        public IEnumerable<Employee> LoadEmployees()
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
@@ -18,7 +19,8 @@ namespace WebApiDemo.Controllers
             }
         }
 
-        public HttpResponseMessage Get(int id)
+        [HttpGet]
+        public HttpResponseMessage LoadEmployeeById(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
@@ -35,7 +37,8 @@ namespace WebApiDemo.Controllers
             }
         }
 
-        public HttpResponseMessage Post([FromBody] Employee employee)
+        [HttpPost]
+        public HttpResponseMessage CreateEmployee([FromBody] Employee employee)
         {
             try
             {
@@ -64,7 +67,8 @@ namespace WebApiDemo.Controllers
         //    }
         //}
 
-        public HttpResponseMessage Delete(int id)
+        [HttpDelete]
+        public HttpResponseMessage DeleteEmployee(int id)
         {
             try
             {
@@ -89,7 +93,8 @@ namespace WebApiDemo.Controllers
             }
         }
 
-        public HttpResponseMessage Put(int id, [FromBody] Employee employee)
+        [HttpPut]
+        public HttpResponseMessage UpdateEmployee(int id, [FromBody] Employee employee)
         {
             try
             {
