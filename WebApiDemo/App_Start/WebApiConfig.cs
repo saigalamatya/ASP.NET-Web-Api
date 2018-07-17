@@ -10,10 +10,10 @@ namespace WebApiDemo
 {
     public class CustomJsonFormatter : JsonMediaTypeFormatter
     {
-        public CustomJsonFormatter()
-        {
-            this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-        }
+        //public CustomJsonFormatter()
+        //{
+        //    this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+        //}
 
         public override void SetDefaultContentHeaders(Type type, HttpContentHeaders headers, MediaTypeHeaderValue mediaType)
         {
@@ -41,7 +41,7 @@ namespace WebApiDemo
             //config.Formatters.Remove(config.Formatters.JsonFormatter);
             //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
 
-            config.Formatters.Add(new CustomJsonFormatter());
+            //config.Formatters.Add(new CustomJsonFormatter());
 
             //config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
