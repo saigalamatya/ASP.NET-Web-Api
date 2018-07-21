@@ -10,17 +10,44 @@ namespace WebApiDemo.Controllers
 {
     public class EmployeesController : ApiController
     {
+        //[HttpGet]
+        //public IEnumerable<Employee> GetAllEmployees()
+        //{
+        //    using (EmployeeDBEntities entities = new EmployeeDBEntities())
+        //    {
+        //        return entities.Employees.ToList();
+        //    }
+        //}
+
         [HttpGet]
-        public IEnumerable<Employee> LoadEmployees()
+        //[Route("gender")]
+        public HttpResponseMessage FetchEmployeeByGender([FromUri] string gender="All")
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                return entities.Employees.ToList();
+                var pairs = this.Request.GetQueryNameValuePairs();
+                string key;
+                key = pairs.Where(q => q.Key == "key").Select(q => q.Value).FirstOrDefault();
+                Console.WriteLine("Keys" + key);
+                switch (gender.ToLower())
+                {
+                    case "all":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+                    case "male":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                            entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+                    case "female":
+                        return Request.CreateResponse(HttpStatusCode.OK,
+                            entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Value for gender must be Male, Female or All. " + gender + " is invalid!");
+                }
             }
         }
-
+           
         [HttpGet]
-        public HttpResponseMessage LoadEmployeeById(int id)
+        public HttpResponseMessage FetchEmployeeById(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {

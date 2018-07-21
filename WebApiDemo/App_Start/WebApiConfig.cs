@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace WebApiDemo
 {
@@ -36,6 +37,17 @@ namespace WebApiDemo
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Routes.MapHttpRoute(
+            //    name: "RestApi",
+            //    routeTemplate: "api/{controller}/{gender}",
+            //    defaults: new { gender = RouteParameter.Optional }
+            //);
+
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter);
+            
+
             // Remove Xml Media Type irrespective of the accept header value
             //config.Formatters.Remove(config.Formatters.XmlFormatter);
             //config.Formatters.Remove(config.Formatters.JsonFormatter);

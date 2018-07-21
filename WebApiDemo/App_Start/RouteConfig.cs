@@ -18,6 +18,12 @@ namespace WebApiDemo
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Rest",
+                url: "{controller}/{gender}",
+                defaults: new { controller = "Employees", id = UrlParameter.Optional }
+            );
         }
     }
 }
