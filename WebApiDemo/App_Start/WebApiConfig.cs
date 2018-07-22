@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using WebApiContrib.Formatting.Jsonp;
+using System.Web.Http.Cors;
 
 namespace WebApiDemo
 {
@@ -44,9 +45,15 @@ namespace WebApiDemo
             //    defaults: new { gender = RouteParameter.Optional }
             //);
 
-            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
-            config.Formatters.Insert(0, jsonpFormatter);
-            
+            //// for jsonp to resolve cors issue
+            // var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            // config.Formatters.Insert(0, jsonpFormatter);
+
+            // Enable CORS using package
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+
+            config.Filters.Add(new RequireHttpsAttribute());
 
             // Remove Xml Media Type irrespective of the accept header value
             //config.Formatters.Remove(config.Formatters.XmlFormatter);

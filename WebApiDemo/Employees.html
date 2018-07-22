@@ -12,7 +12,7 @@
                 $.ajax({
                     type: 'GET',
                     url: 'api/Employees',
-                    dataType: 'jsonp',
+                    dataType: 'json',
                     success: function (data) {
                         ulEmployees.empty();
                         $.each(data, function (index, val) {
