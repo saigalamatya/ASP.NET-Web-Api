@@ -9,16 +9,32 @@
             var ulEmployees = $('#ulEmployees');
 
             $('#btn').click(function () {
+                // Get the username & password from textboxes
+                var username = $('#txtUsername').val();
+                var password = $('#txtPassword').val();
+
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:63271/api/employees',
                     dataType: 'json',
+                    // specify the authentication header
+                    // btoa() method encodes a string to Base64
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(username + ':' + password)
+                    },
                     success: function (data) {
                         ulEmployees.empty();
                         $.each(data, function (index, val) {
                             var fullName = val.FirstName + ' ' + val.LastName;
                             ulEmployees.append('<li>' + fullName + '</li > ')
                         });
+                    },
+                    complete: function (jqXHR) {
+                        if (jqXHR.status == '401') {
+                            ulEmployees.empty();
+                            ulEmployees.append('<li style="color:red">'
+                                + jqXHR.status + ':' + jqXHR.statusText + '</li > ')
+                        }
                     }
                 });
             });
@@ -31,8 +47,11 @@
 </head>
 <body>
 
-    <input id="btn" type="button" value="Get All Employees" />
-    <input id="btnClear" type="button" value="Clear" />
+    Username: <input id="txtUsername" type="text" />
+    Password: <input id="txtPassword" type="password" />
+              <br /><br />
+    <input type="button" id="btn" value="Authenticate and Get Employees" />
+    <input type="button" id="btnClear" value="Clear" />
     <ul id="ulEmployees"></ul>
 </body>
 </html>
