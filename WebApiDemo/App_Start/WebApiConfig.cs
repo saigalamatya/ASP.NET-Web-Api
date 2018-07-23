@@ -45,7 +45,7 @@ namespace WebApiDemo
             //    defaults: new { gender = RouteParameter.Optional }
             //);
 
-            //// for jsonp to resolve cors issue
+            // for jsonp to resolve cors issue
             // var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
             // config.Formatters.Insert(0, jsonpFormatter);
 
@@ -53,7 +53,10 @@ namespace WebApiDemo
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
-            config.Filters.Add(new RequireHttpsAttribute());
+            //config.Filters.Add(new RequireHttpsAttribute());
+
+            // for basic authentication
+            config.Filters.Add(new BasicAuthenticationAttribute());
 
             // Remove Xml Media Type irrespective of the accept header value
             //config.Formatters.Remove(config.Formatters.XmlFormatter);
